@@ -3,7 +3,7 @@ package document;
 /** 
  * A class that represents a text document
  * @author UC San Diego Intermediate Programming MOOC team
- * Alejandro Lanza
+ * Alejandro Lanza Jan 2021
  */
 import java.util.ArrayList;
 import java.util.List;
