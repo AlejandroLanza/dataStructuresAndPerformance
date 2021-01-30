@@ -28,7 +28,7 @@ public class DocumentBenchmarking {
 
 		// The number of steps to run.  
 		// You can play around with this.
-		int numSteps = 20;
+		int numSteps = 30;
 		
 		// THe number of characters to start with. 
 		// You can play around with this.
@@ -37,6 +37,10 @@ public class DocumentBenchmarking {
 		// TODO: Fill in the rest of this method so that it runs two loops
 		// and prints out timing results as described in the assignment 
 		// instructions and following the pseudocode below.
+		
+		
+		System.out.println("NumberOfChars\t BasicTime\t EfficientTime");
+		
 		for (int numToCheck = start; numToCheck < numSteps*increment + start; 
 				numToCheck += increment)
 		{
@@ -58,8 +62,41 @@ public class DocumentBenchmarking {
 			 * 6. Print out the time it took to complete the loop in step 5 
 			 *      (on the same line as the first print statement) followed by a newline (\n) 
 			 */  
-			 
+			System.out.print(numToCheck + "\t\t");
+		
+			String text = getStringFromFile(textfile, numToCheck);
+			long startTimeBas = System.nanoTime();
+			
+			for (int i = 0; i < trials; i++) {
+				Document myBasicDoc = new BasicDocument(text);
+				myBasicDoc.getFleschScore();
+			}
+			
+			long endTimeBas = System.nanoTime();
+			System.out.print((endTimeBas - startTimeBas) / 1000000000.0 + "\t");
+			
+			long startTimeEff = System.nanoTime();
+			
+			for (int j = 0; j < trials; j++) {
+				Document myEffDoc = new EfficientDocument(text);
+				myEffDoc.getFleschScore();
+			}
+			
+			long endTimeEff = System.nanoTime();
+			System.out.println((endTimeEff - startTimeEff) / 1000000000.0);
+			
+			
+//			long startTimeDocCreation = System.nanoTime();
+//			Document myEffDoc = new EfficientDocument(text);
+//			long endTimeDocCreation = System.nanoTime();
+//			System.out.println("Doc create: " + (endTimeDocCreation - startTimeDocCreation) / 1000000000.0);
+//			long startTimeFlScore = System.nanoTime();
+//			myEffDoc.getFleschScore();
+//			long endTimeFlScore = System.nanoTime();
+//			System.out.println("Fl sc calc: " + (endTimeFlScore - startTimeFlScore) / 1000000000.0);
 		}
+		System.out.println("done");
+		
 	
 	}
 	

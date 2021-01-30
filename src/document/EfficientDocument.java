@@ -19,6 +19,10 @@ public class EfficientDocument extends Document {
 	{
 		super(text);
 		processText();
+//		numWords = 0;
+//		numSentences = 0;
+//		numSyllables = 0;
+		
 	}
 	
 	
@@ -35,7 +39,8 @@ public class EfficientDocument extends Document {
 	{
 	    // Note: This is a fast way of checking whether a string is a word
 	    // You probably don't want to change it.
-		return !(tok.indexOf("!") >=0 || tok.indexOf(".") >=0 || tok.indexOf("?")>=0);
+		
+		return !(tok.indexOf('!') >=0 || tok.indexOf('.') >=0 || tok.indexOf('?')>=0);
 	}
 	
 	
@@ -58,12 +63,13 @@ public class EfficientDocument extends Document {
 		for (String aWord : tokens) {
 			if (isWord(aWord)) {
 				numWords ++;
+				numSyllables += countSyllables(aWord);
 				lastItemIsWord = true;
 			}else {
 				numSentences ++;
 				lastItemIsWord = false;
 			}
-			numSyllables += countSyllables(aWord);
+			
 		}
 		if (lastItemIsWord) numSentences++;
 	}
