@@ -17,6 +17,11 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
 		// TODO: Implement this method
+		this.head = new LLNode<E>(null);
+		this.tail = new LLNode<E>(null);
+		this.head.next = this.tail;
+		this.tail.prev = this.head;
+		this.size = 0;
 	}
 
 	/**
@@ -26,6 +31,11 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public boolean add(E element ) 
 	{
 		// TODO: Implement this method
+		LLNode<E> penultimateNode = tail.prev;
+		LLNode<E> newNode = new LLNode<E>(element, penultimateNode, tail);
+		penultimateNode.next = newNode;
+		tail.prev = newNode;
+		size++;
 		return false;
 	}
 
@@ -34,7 +44,16 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E get(int index) 
 	{
 		// TODO: Implement this method.
-		return null;
+//		System.out.println("here");
+		if (index >= this.size || index < 0) {
+			throw new IndexOutOfBoundsException("Invalid position selected");
+			
+		}
+		LLNode<E> myNode = head;
+		for (int i = 0; i <= index; i++) {
+			myNode = myNode.next;
+		}
+		return myNode.data;
 	}
 
 	/**
@@ -45,6 +64,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public void add(int index, E element ) 
 	{
 		// TODO: Implement this method
+		LLNode<E> nodeToReplace = head;
+		for (int i = 0; i <= index; i++) {
+			nodeToReplace = nodeToReplace.next;
+		}
+		LLNode<E> newNode = new LLNode<E>(element, nodeToReplace.prev, nodeToReplace);
+		nodeToReplace.prev.next = newNode;
+		nodeToReplace.prev = newNode;
+		size ++;		
 	}
 
 
@@ -93,8 +120,15 @@ class LLNode<E>
 	public LLNode(E e) 
 	{
 		this.data = e;
-		this.prev = null;
-		this.next = null;
+//		this.prev = new LLNode<E>(null);
+//		this.next = new LLNode<E>(null);
+	}
+	
+	public LLNode(E e, LLNode<E> prev, LLNode<E> next) {
+		this.data = e;
+		this.prev = prev;
+		this.next = next;
+		
 	}
 
 }

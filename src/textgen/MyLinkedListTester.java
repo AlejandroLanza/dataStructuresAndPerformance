@@ -63,9 +63,10 @@ public class MyLinkedListTester {
 		}
 		
 		// test short list, first contents, then out of bounds
+//		System.out.println("Shortlist size: " + shortList.get(0));
 		assertEquals("Check first", "A", shortList.get(0));
 		assertEquals("Check second", "B", shortList.get(1));
-		
+		assertEquals("Check my own", "B", shortList.get(1));
 		try {
 			shortList.get(-1);
 			fail("Check out of bounds");
@@ -124,6 +125,10 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
+		shortList.add("C");
+//		assertEquals("Add to end, check size is correct ", 3, shortList.size());
+		assertEquals("Add to end, check 3rd char is C ", "C", shortList.get(2));
+		assertEquals("Add to end, check 2nd char is still B ", "B", shortList.get(1));
 		
 	}
 
@@ -145,6 +150,20 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
+//		shortList(A,B)
+//		shortList.add(0, “zero”);
+		shortList.add(0, "zero");
+//		shortList(zero,A,B)
+		assertEquals("Added zero at pos 0", "zero", shortList.get(0));
+		assertEquals("Bumped A to pos 1", "A", shortList.get(1));
+		
+		shortList.add(2, "C");		
+//		shortList(zero,A,C,B)
+		assertEquals("Added C to pos 2", "C", shortList.get(2));
+		assertEquals("Bumped B to pos 3", "B", shortList.get(3));
+
+		shortList.add(4,"D");
+		assertEquals("Added D to pos 4", "D", shortList.get(4));
 		
 	}
 	
