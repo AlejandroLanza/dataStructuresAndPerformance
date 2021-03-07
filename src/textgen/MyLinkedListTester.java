@@ -58,9 +58,7 @@ public class MyLinkedListTester {
 			emptyList.get(0);
 			fail("Check out of bounds");
 		}
-		catch (IndexOutOfBoundsException e) {
-			
-		}
+		catch (IndexOutOfBoundsException e) {}
 		
 		// test short list, first contents, then out of bounds
 //		System.out.println("Shortlist size: " + shortList.get(0));
@@ -115,7 +113,20 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
+		a = list1.remove(1);
+		assertEquals("Remove: last element can be removed and is correct ", 42, a);
+		
+		
 		// TODO: Add more tests here
+		try {
+			int b = list1.remove(3);
+			fail("Check out of bounds");
+		}catch(IndexOutOfBoundsException e){}
+		
+		try {
+			int b = list1.remove(-1);
+			fail("Check out of bounds negative");
+		}catch(IndexOutOfBoundsException e){}
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -138,6 +149,10 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		assertEquals("Shortlist size test", 2, shortList.size());
+		assertEquals("Emptylist size test", 0, emptyList.size());
+		assertEquals("Longerlist size test", 10, longerList.size());
+		assertEquals("List1 size test", 3, list1.size());
 	}
 
 	
@@ -165,6 +180,21 @@ public class MyLinkedListTester {
 		shortList.add(4,"D");
 		assertEquals("Added D to pos 4", "D", shortList.get(4));
 		
+		// test nullpointer
+		try {
+			shortList.add(3, null);
+			fail("Check null element");
+		}
+		catch(NullPointerException e){}
+		
+		// test out of bounds
+		try {
+			shortList.add(10, "Z");
+			fail("Check out of bounds add");
+		}
+		catch(IndexOutOfBoundsException e) {
+		}
+		
 	}
 	
 	/** Test setting an element in the list */
@@ -172,7 +202,28 @@ public class MyLinkedListTester {
 	public void testSet()
 	{
 	    // TODO: implement this test
+		
+		// test replacing first element
+	    int a = list1.set(0, 33);
+	    assertEquals("Replaced element 0 (65) with 33", (Integer)33, list1.get(0));
+	    assertEquals("Replaced element 0 (65) with 33", 65, a);
+
+	    // test nullPointer and outOfBounds
+	    try {
+	    	a = list1.set(-1, 33);
+	    	fail("Check out of bounds negative for set");
+	    }catch(IndexOutOfBoundsException e) {}
+
+	    try {
+	    	a = list1.set(3, 33);
+	    	fail("Check out of bounds over for set");
+	    }catch(IndexOutOfBoundsException e) {}
 	    
+	    // test setting the last element
+	    a = list1.set(2, 100);
+	    assertEquals("Replaced element 2 (42) with 100", (Integer)100, list1.get(2));
+	    assertEquals("A should be 42", 42, a);
+
 	}
 	
 	

@@ -64,6 +64,17 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public void add(int index, E element ) 
 	{
 		// TODO: Implement this method
+		
+		// throw nullpointerexception if element is null
+		if (element == null) {
+			throw new NullPointerException("Cannot add null element");
+		}
+		
+		// throw out of bounds when applicable
+		if (index > this.size || index < 0) {
+			throw new IndexOutOfBoundsException("Invalid position selected");
+		}
+		
 		LLNode<E> nodeToReplace = head;
 		for (int i = 0; i <= index; i++) {
 			nodeToReplace = nodeToReplace.next;
@@ -79,7 +90,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public int size() 
 	{
 		// TODO: Implement this method
-		return -1;
+		return size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
@@ -91,7 +102,19 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E remove(int index) 
 	{
 		// TODO: Implement this method
-		return null;
+		if (index >= this.size || index < 0) {
+			throw new IndexOutOfBoundsException("Invalid position selected");
+		}
+		LLNode<E> nodeToRemove = head;
+		for (int i = 0; i <= index; i++) {
+			nodeToRemove = nodeToRemove.next;
+		}
+		nodeToRemove.prev.next = nodeToRemove.next;
+		nodeToRemove.next.prev = nodeToRemove.prev;
+		
+		size --;	
+		
+		return nodeToRemove.data;
 	}
 
 	/**
@@ -104,7 +127,24 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E set(int index, E element) 
 	{
 		// TODO: Implement this method
-		return null;
+		// throw NullPointerException if element is null
+		if (element == null) {
+			throw new NullPointerException("Cannot add null element");
+		}
+		
+		// throw out of bounds when applicable
+		if (index >= this.size || index < 0) {
+			throw new IndexOutOfBoundsException("Invalid position selected");
+		}
+				
+		LLNode<E> nodeToReplace = head;
+		for (int i = 0; i <= index; i++) {
+			nodeToReplace = nodeToReplace.next;
+		}
+		
+		E replacedItem = nodeToReplace.data;
+		nodeToReplace.data = element;
+		return replacedItem;
 	}   
 }
 
