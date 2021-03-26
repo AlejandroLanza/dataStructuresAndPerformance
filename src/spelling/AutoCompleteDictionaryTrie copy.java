@@ -57,21 +57,27 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public TrieNode createNodes(String word, TrieNode aNode) {
 		
 		if (word.length() == 0) {
-			if (!aNode.endsWord()) {size ++;}
-			aNode.setEndsWord(true);
+			
 			return aNode;
 		}
 		
 		TrieNode newNode = aNode.insert(word.charAt(0));
 		
+		if (word.length() == 1 && newNode != null) {
+			newNode.setEndsWord(true);
+			size ++;
+		}
 		if (newNode != null) {
 			return createNodes(word.substring(1), newNode);
-		} else {
-			TrieNode nextNode = aNode.getChild(word.charAt(0));			
+		}else {
+			TrieNode nextNode = aNode.getChild(word.charAt(0));
+			if (word.length() == 1) {
+				if (!nextNode.endsWord()) {size ++;}
+				nextNode.setEndsWord(true); 
+			}
 			return createNodes(word.substring(1), nextNode);
 		}
 	}
-	
 	public int size()
 	{
 	    //TODO: Implement this method
@@ -128,10 +134,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 // This method should implement the following algorithm:
     	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
     	 //    empty list
-    	 TrieNode someNode = findNode("ho", root);
-    	 if (someNode == null) { return null; }
-    	 
-    	  // 2. Once the stem is found, perform a breadth first search to generate completions
+    	 // 2. Once the stem is found, perform a breadth first search to generate completions
     	 //    using the following algorithm:
     	 //    Create a queue (LinkedList) and add the node that completes the stem to the back
     	 //       of the list.
@@ -144,12 +147,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 
          return null;
      }
-     
-     public TrieNode findNode(String word, TrieNode aNode) {
-    	 if (word.length() == 0 || aNode == null) { return aNode; }
-    	 TrieNode nextNode = aNode.getChild(word.charAt(0)); 
-    	 return findNode(word.substring(1), nextNode);
-     }
+
  	// For debugging
  	public void printTree()
  	{
